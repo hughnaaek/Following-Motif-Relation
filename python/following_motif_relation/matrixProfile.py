@@ -15,6 +15,14 @@ import multiprocessing
 from functools import partial
 import math
 
+__all__ = [
+    'Order', 'linearOrder', 'randomOrder', 
+    'zNormalize', 'zNormalizeEuclidian', 'movmeanstd', 
+    'movstd', 'slidingDotProduct', 'mass', 'massStomp',
+    'apply_av','is_self_join','stamp'
+    ]
+
+
 #from .scrimp import scrimp_plus_plus
 #---------------------------------------------------------------
 class Order:

@@ -1,14 +1,7 @@
+__all__ = ['ground_truth', 'Non','evaluate_a_pair_ts','calculate_matrix','confusion_matrix_many','sklearn_cm_extract']
+
 import numpy as np 
-from sklearn.metrics import confusion_matrix
-
-import sys
-import os 
-
-sys.path.append(os.path.abspath(os.path.join('..', '.')))
-
-from following_motif_method.followingMotif import following_relation_method
-from following_motif_method.compared_method import FLICA,max_correlation
-
+from following_motif_relation.followingMotif import following_motif_method
 
 def ground_truth(ts):
     gt_ts = ts[1]
@@ -21,20 +14,19 @@ def ground_truth(ts):
 def Non(a_list):
     return np.setdiff1d(np.array(range(len(a_list)+1)), a_list)
 
-def confusion_matrix(TP, TN, FP, FN):
-
-    def f1_score(TP, TN, FP, FN):
+def calculate_matrix(TP, TN, FP, FN):
+    def f1_score(TP, FP, FN):
         precision = TP / (TP + FP)
         recall = TP / (TP + FN)
         f1 = 2 * (precision * recall) / (precision + recall)
         return precision,recall,f1
     
-    precision,recall,f1 = f1_score(TP, TN, FP, FN)
+    precision,recall,f1 = f1_score(TP, FP, FN)
     accuracy = (TP + TN) / (TP + TN + FP + FN)
     
     return TP,TN,FP,FN,precision,recall,f1,accuracy
 
-def evaluate_a_pair_ts(leader,follower,seed=0,wd=30,gap=10):
+def evaluate_a_pair_ts(leader,follower,wd=30,thres=10,randseed=0,verbose=True):
     ground_truth_lead    = ground_truth(leader) 
     ground_truth_follow  = ground_truth(follower)
 
@@ -43,9 +35,10 @@ def evaluate_a_pair_ts(leader,follower,seed=0,wd=30,gap=10):
     lead_ts   = (leader[0]).copy()
     follow_ts = (follower[0]).copy()
 
-    np.random.seed(seed)
-    result = following_relation_method(lead_ts,follow_ts,wd=wd,gap=gap)
-    print(fr"{result[1]}")
+    np.random.seed(randseed)
+    result = following_motif_method(lead_ts,follow_ts,wd=wd,thres=thres,randseed=randseed)
+    if verbose:
+        print(f'leadVol: {result[1]}')
 
     new_index_lead   = list(set(result[2][1]))
     new_index_follow = list(set(result[2][0]))
@@ -82,7 +75,7 @@ def evaluate_a_pair_ts(leader,follower,seed=0,wd=30,gap=10):
 
     return np.array(data)
 
-def confusion_matrix(cm_result):
+def confusion_matrix_TF(cm_result):
     TP = cm_result[1, 1]
     TN = cm_result[0, 0]
     FP = cm_result[0, 1]
@@ -115,6 +108,14 @@ def confusion_matrix_many(cm_result1,cm_result2,cm_result3):
     accuracy = (TP + TN) / (TP + TN + FP + FN)
     
     return TP,TN,FP,FN,precision,recall,f1,accuracy
+
+def sklearn_cm_extract(cm_result):
+    TP = cm_result[1, 1]
+    TN = cm_result[0, 0]
+    FP = cm_result[0, 1]
+    FN = cm_result[1, 0]
+
+    return TP,TN,FP,FN
 
 if __name__ == "__main__":
     print("hugh")

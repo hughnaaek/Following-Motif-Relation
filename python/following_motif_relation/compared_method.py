@@ -1,3 +1,5 @@
+__all__ = ['FLICA','max_correlation']
+
 import numpy as np 
 from dtw import *
 from scipy.signal import correlate

@@ -1,3 +1,5 @@
+__all__ = ['leading_ts1', 'following_ts1','leading_ts','following_ts']
+
 import numpy as np
 
 def leading_ts1(randseed=0,k_motif=2,varied_len=False,one_motif=False):

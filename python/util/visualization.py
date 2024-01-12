@@ -1,3 +1,6 @@
+__all__ = ['ts_visualization', 'leadfollow_visualization','alignment_plot',
+           'find_continuous_ranges','create_timeseries_from_array','plot_time_series_with_highlights']
+
 import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt 
@@ -14,7 +17,7 @@ def ts_visualization(ts):
 
 
 def leadfollow_visualization(ts1,ts2):
-  plt.figure(figsize=(15, 10))
+  plt.figure(figsize=(8, 5))
 
   plt.subplot(2, 1, 1)
   plt.title('Leading Time Series (Adam Singing)', fontsize=22)
@@ -95,10 +98,7 @@ def find_continuous_ranges(indices):
     return ranges
 
 
-def create_timeseries_from_array(data_array, start_date='20230601', periods=None, freq="min"):
-    if periods is None:
-        periods = len(data_array)
-    dates = pd.date_range(start=start_date, periods=periods, freq="min")
+def create_timeseries_from_array(data_array):
     ts = pd.Series(data_array, index=list(range(len(data_array))))
     return ts
 
@@ -106,24 +106,24 @@ def create_timeseries_from_array(data_array, start_date='20230601', periods=None
 def plot_time_series_with_highlights(ts, highlight_indices, ax,
                                      title="Time Series with Highlighted Ranges", 
                                      ground_truth_indices=None):
-    # Plot the time series data
+    
     ax.plot(ts.index, ts.values, label='Time Series Data')
 
-    # Highlight the predicted ranges
+    
     if highlight_indices is not None:
         predicted_ranges = find_continuous_ranges(highlight_indices)
         for start_idx, end_idx in predicted_ranges:
             ax.axvspan(ts.index[start_idx], ts.index[end_idx],
                        color='green', alpha=1, label='Predicted')
 
-    # Highlight the ground truth ranges
+    
     if ground_truth_indices is not None:
         ground_truth_ranges = find_continuous_ranges(ground_truth_indices)
         for start_idx, end_idx in ground_truth_ranges:
             ax.axvspan(ts.index[start_idx], ts.index[end_idx],
                        color='red', alpha=1, label='Ground Truth')
             
-    # Highlight overlap areas
+    
     if highlight_indices is not None and ground_truth_indices is not None:
         overlap_indices = set(highlight_indices).intersection(ground_truth_indices)
         if overlap_indices:
@@ -132,7 +132,7 @@ def plot_time_series_with_highlights(ts, highlight_indices, ax,
                 ax.axvspan(ts.index[start_idx], ts.index[end_idx],
                            color='yellow', alpha=1, label='Overlap')
 
-    # Adding labels and title for clarity
+    
     ax.set_xlabel('Time Step', fontsize=18)
     ax.set_ylabel('Value', fontsize=18)
     ax.set_title(title, fontsize=20)
