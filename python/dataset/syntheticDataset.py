@@ -110,16 +110,10 @@ def following_ts(leading_ts,randseed=0,uncontinuous=True,ground_truth=False,one_
   degree_of_noise = 3
   noise = 0.5
 
-<<<<<<< HEAD
   if one_motif:
     factor = 1
   else: 
     factor = 5
-=======
-  factor = 1
-  if one_motif: factor*1
-  else: factor*5
->>>>>>> 413c7457c5a91a1649f46577311f1b031ee1e95d
 
   first_signal = np.random.normal(0, noise, N_first_signal)*factor
 
