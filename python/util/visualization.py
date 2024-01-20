@@ -17,23 +17,23 @@ def ts_visualization(ts):
 
 
 def leadfollow_visualization(ts1,ts2):
-  plt.figure(figsize=(8, 5))
+  plt.figure(figsize=(15, 10))
 
   plt.subplot(2, 1, 1)
-  plt.title('Leading Time Series (Adam Singing)', fontsize=22)
-  plt.xlabel('Time', fontsize=22)
-  plt.ylabel('Value', fontsize=22)
-  plt.xticks(fontsize=18)
-  plt.yticks(fontsize=18)
+  plt.title('Leading Time Series (Adam Singing)', fontsize=30)
+  plt.xlabel('Time', fontsize=30)
+  plt.ylabel('Value', fontsize=30)
+  plt.xticks(fontsize=25)
+  plt.yticks(fontsize=25)
   plt.grid()
   plt.plot(ts1, label='Leading signal', color='blue')
 
   plt.subplot(2, 1, 2)
-  plt.title('Following Time Series (Matt Singing)', fontsize=22)
-  plt.xlabel('Time', fontsize=22)
-  plt.ylabel('Value', fontsize=22)
-  plt.xticks(fontsize=18)
-  plt.yticks(fontsize=18)
+  plt.title('Following Time Series (Matt Singing)', fontsize=30)
+  plt.xlabel('Time', fontsize=30)
+  plt.ylabel('Value', fontsize=30)
+  plt.xticks(fontsize=25)
+  plt.yticks(fontsize=25)
   plt.grid()
   plt.plot(ts2, label='Following signal', color='red')
 

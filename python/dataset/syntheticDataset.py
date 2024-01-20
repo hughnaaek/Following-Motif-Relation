@@ -255,6 +255,9 @@ def leading_ts(randseed=0,k_motif=2,varied_len=False,one_motif=False):
 
   while n<len(motif_start_list):
     factor = np.random.randint(low=1,high=7)
+    if one_motif:
+      factor = 1
+
     if k_motif <= 1: i = 0
     try:
       time_series[motif_start_list[n]:motif_start_list[n]+motif_length] += np.sin(motif[i][0] * np.pi * t[:motif_length]/motif[i][1])
@@ -287,7 +290,7 @@ def leading_ts(randseed=0,k_motif=2,varied_len=False,one_motif=False):
   return time_series
 
 
-def following_ts(leading_ts,randseed=0,uncontinuous=True,ground_truth=False):
+def following_ts(leading_ts,randseed=0,uncontinuous=True,ground_truth=False,one_motif=True):
 
   np.random.seed(randseed)
 
@@ -295,12 +298,16 @@ def following_ts(leading_ts,randseed=0,uncontinuous=True,ground_truth=False):
   N              = (leading_signal.shape)[0]
   percent        = np.random.randint(low=20,high=35)/100
   N_first_signal = int(np.ceil(N*percent))
-  N_follow       = N - N_first_signal
 
   degree_of_noise = 3
   noise = 0.5
 
-  first_signal = np.random.normal(0, noise, N_first_signal)*5
+  if one_motif:
+    factor = 1
+  else: 
+    factor = 5
+
+  first_signal = np.random.normal(0, noise, N_first_signal)*factor
 
   #leader interval
   lead_motif_start = list(leading_ts[1][0])
@@ -342,7 +349,7 @@ def following_ts(leading_ts,randseed=0,uncontinuous=True,ground_truth=False):
     time_series2 = time_series[cutting_point:]
 
     percent        = np.random.randint(low=10,high=15)/100
-    second_signal = np.random.normal(0, noise, second_N)*5
+    second_signal = np.random.normal(0, noise, second_N)*factor
 
     time_series = np.hstack((first_signal,time_series1,second_signal,time_series2))[:N]
 
