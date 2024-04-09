@@ -3,6 +3,6 @@
 
 Given two time series, with one containing a motif that leads the motif pattern in the other, our goal is to identify which time series leads or follows, and to predict the motif-following time steps in both series.
 
-The result of the paper are in the https://github.com/hughnaaek/Following-Motif-Relation/tree/main/python/exp files and 
+The result of the paper are in main/python/exp folder and 
 
 
