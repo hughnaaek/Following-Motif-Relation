@@ -6,3 +6,6 @@ Given two time series, with one containing a motif that leads the motif pattern 
 The result of the paper are in main/python/real_data_exp.ipynb and main/python/synthetic_data_exp.ipynb and R/result folder for VL-Transfer Entropy
 
 
+## Attribution
+
+Some portions of the code in this repository were generated with the assistance of OpenAI's ChatGPT.
